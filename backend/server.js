@@ -11,10 +11,10 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // PostgreSQL Connection
 const pool = new Pool({
-  user: 'your_user',
+  user: 'postgres',
   host: 'localhost',
   database: 'momo',
-  password: 'your_password',
+  password: 'newpassword',
   port: 5432,
 });
 

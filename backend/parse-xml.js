@@ -1,18 +1,37 @@
+// backend/parse-xml.js
 const fs = require('fs');
 const xml2js = require('xml2js');
 
-const xml = fs.readFileSync('./data/momo.xml', 'utf8');
-const parser = new xml2js.Parser();
+function cleanAmount(text) {
+  return parseInt(text.replace(/[^\d]/g, ''), 10);
+}
 
-parser.parseString(xml, (err, result) => {
-  if (err) throw err;
+function parseBody(body) {
+  const lower = body.toLowerCase();
+  let type = 'other';
 
-  const smsList = result.smses.sms;
+  if (lower.includes('withdrawn')) type = 'withdrawal';
+  else if (lower.includes('payment')) type = 'payment';
+  else if (lower.includes('deposit')) type = 'deposit';
+  else if (lower.includes('transferred')) type = 'transfer';
+  else if (lower.includes('bundle')) type = 'bundle';
 
-  smsList.forEach((sms) => {
-    const body = sms.$.body;
+  const amountMatch = body.match(/([0-9,]+) RWF/);
+  const amount = amountMatch ? cleanAmount(amountMatch[1]) : 0;
 
-    // do your regex magic here and console.log
-    console.log(body); // test output
-  });
-});
+  const dateMatch = body.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/);
+  const date = dateMatch ? dateMatch[0] : null;
+
+  return { body, type, amount, date };
+}
+
+async function parseXMLFile(filepath) {
+  const xml = fs.readFileSync(filepath, 'utf-8');
+  const result = await xml2js.parseStringPromise(xml);
+
+  // confirm it's <smses><sms ... /></smses>
+  const messages = result.smses.sms;
+  return messages.map(s => parseBody(s.$.body)); // `s.$.body` is the body attribute
+}
+
+module.exports = parseXMLFile;
