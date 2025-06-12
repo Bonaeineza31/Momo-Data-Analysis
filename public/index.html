@@ -16,27 +16,25 @@
             <h2>Search and Filter</h2>
             <input type="text" id="search-input" placeholder="Search transactions">
             <select id="filter-type">
-                <option value="">All Types</option>
-                <option value="incoming">Incoming Money</option>
-                <option value="payment">Payments</option>
-                <option value="transfer">Transfers</option>
-                <!-- Add more transaction types here -->
+              <option value="">All Types</option>
+<option value="payment">Payments</option>
+<option value="withdrawal">Withdrawals</option>
+<option value="transfer">Transfers</option>
+<option value="deposit">Deposits</option>
+<option value="bundle">Bundles</option>
+
             </select>
             <button id="apply-filter">Apply Filter</button>
         </section>
         <section id="visualizations">
-            <!-- Charts and graphs will go here -->
-            <h2>Visualizations</h2>
-            <div id="transaction-volume-chart">
-                <!-- Chart for transaction volume by type -->
-            </div>
-            <div id="monthly-summary-chart">
-                <!-- Chart for monthly summaries -->
-            </div>
-            <div id="payment-distribution-chart">
-                <!-- Chart for payment distribution -->
-            </div>
-        </section>
+          <h2>Visualizations</h2>
+
+          <canvas id="transaction-volume-chart" width="400" height="200"></canvas>
+
+          <canvas id="monthly-summary-chart" width="400" height="200"></canvas>
+
+          <canvas id="payment-distribution-chart" width="400" height="200"></canvas>
+      </section>
         <section id="details-view">
             <!-- Detailed transaction information will go here -->
             <h2>Transaction Details</h2>
@@ -48,8 +46,10 @@
     <footer>
         <p>&copy; 2024 MoMo Data Analysis</p>
     </footer>
-    <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="chart.js"></script>
+    <script src="index.js"></script>
+   
 
 </body>
 </html>

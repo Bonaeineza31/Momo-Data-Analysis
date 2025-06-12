@@ -42,10 +42,11 @@ section {
     cursor: pointer;
 }
 
-#visualizations {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+#visualizations canvas {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
 }
 
 #transaction-volume-chart,
