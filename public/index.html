@@ -1,55 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoMo Data Analysis Dashboard</title>
-    <link rel="stylesheet" href="index.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MoMo Data Dashboard</title>
+  <link rel="stylesheet" href="index.css"/>
 </head>
 <body>
-    <header>
-        <h1>MoMo Data Analysis Dashboard</h1>
-    </header>
-    <main>
-        <section id="search-filter">
-            <!-- Search and Filter options will go here -->
-            <h2>Search and Filter</h2>
-            <input type="text" id="search-input" placeholder="Search transactions">
-            <select id="filter-type">
-              <option value="">All Types</option>
-<option value="payment">Payments</option>
-<option value="withdrawal">Withdrawals</option>
-<option value="transfer">Transfers</option>
-<option value="deposit">Deposits</option>
-<option value="bundle">Bundles</option>
+  <header>
+    <h1>MoMo Data Dashboard</h1>
+  </header>
 
-            </select>
-            <button id="apply-filter">Apply Filter</button>
-        </section>
-        <section id="visualizations">
-          <h2>Visualizations</h2>
+  <main>
+    <!-- Summary Cards -->
+    <section id="summary-cards">
+      <div class="card" id="total-transactions">📊 Total Transactions: 0</div>
+      <div class="card" id="total-amount">💰 Total Money Moved: 0 RWF</div>
+      <div class="card" id="total-incoming">⬇️ Incoming: 0 RWF</div>
+      <div class="card" id="total-outgoing">⬆️ Outgoing: 0 RWF</div>
+    </section>
 
-          <canvas id="transaction-volume-chart" width="400" height="200"></canvas>
+    <!-- Filter -->
+    <section id="search-filter">
+      <h2>Search & Filter</h2>
+      <input type="text" id="search-input" placeholder="Search in message body..." />
+      <select id="filter-type">
+        <option value="">All Types</option>
+        <option value="payment">Payments</option>
+        <option value="withdrawal">Withdrawals</option>
+        <option value="transfer">Transfers</option>
+        <option value="deposit">Deposits</option>
+        <option value="bundle">Bundles</option>
+      </select>
+      <button id="apply-filter">Apply Filter</button>
+    </section>
 
-          <canvas id="monthly-summary-chart" width="400" height="200"></canvas>
+    <!-- Charts -->
+    <section id="visualizations">
+      <h2>Visualizations</h2>
+      <canvas id="transaction-volume-chart"></canvas>
+      <canvas id="monthly-summary-chart"></canvas>
+      <canvas id="payment-distribution-chart"></canvas>
+    </section>
 
-          <canvas id="payment-distribution-chart" width="400" height="200"></canvas>
-      </section>
-        <section id="details-view">
-            <!-- Detailed transaction information will go here -->
-            <h2>Transaction Details</h2>
-            <div id="transaction-details">
-                <!-- Details for a selected transaction -->
-            </div>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 MoMo Data Analysis</p>
-    </footer>
-     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="chart.js"></script>
-    <script src="index.js"></script>
-   
+    <!-- Raw Data -->
+    <section id="details-view">
+      <h2>Transaction Details</h2>
+      <div id="transaction-details"></div>
+    </section>
+  </main>
 
+  <footer>
+    <p>&copy; 2025 MoMo Insights</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="chart.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
