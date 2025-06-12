@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoMo Data Analysis Dashboard</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <h1>MoMo Data Analysis Dashboard</h1>
+    </header>
+    <main>
+        <section id="search-filter">
+            <!-- Search and Filter options will go here -->
+            <h2>Search and Filter</h2>
+            <input type="text" id="search-input" placeholder="Search transactions">
+            <select id="filter-type">
+                <option value="">All Types</option>
+                <option value="incoming">Incoming Money</option>
+                <option value="payment">Payments</option>
+                <option value="transfer">Transfers</option>
+                <!-- Add more transaction types here -->
+            </select>
+            <button id="apply-filter">Apply Filter</button>
+        </section>
+        <section id="visualizations">
+            <!-- Charts and graphs will go here -->
+            <h2>Visualizations</h2>
+            <div id="transaction-volume-chart">
+                <!-- Chart for transaction volume by type -->
+            </div>
+            <div id="monthly-summary-chart">
+                <!-- Chart for monthly summaries -->
+            </div>
+            <div id="payment-distribution-chart">
+                <!-- Chart for payment distribution -->
+            </div>
+        </section>
+        <section id="details-view">
+            <!-- Detailed transaction information will go here -->
+            <h2>Transaction Details</h2>
+            <div id="transaction-details">
+                <!-- Details for a selected transaction -->
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 MoMo Data Analysis</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

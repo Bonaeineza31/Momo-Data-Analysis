@@ -1,0 +1,17 @@
+{
+  "name": "momo-data-analysis",
+  "version": "1.0.0",
+  "description": "A full-stack application for analyzing MoMo SMS data",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "fast-xml-parser": "^4.3.4",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
