@@ -1,0 +1,9 @@
+/* Styles specific to Chart.js canvases */
+canvas {
+  max-width: 100%;
+  height: auto; /* Ensure charts scale responsively */
+  display: block; /* Remove extra space below canvas */
+  margin: 0 auto; /* Center the canvas */
+}
+
+/* You can add more specific styles here if needed, e.g., for tooltips or legends */

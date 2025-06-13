@@ -32,4 +32,5 @@ async function fetchSummary() {
   }
 }
 
-export { fetchTransactionCount, fetchSummary }
+// THIS IS THE CRUCIAL LINE: Now fetchTransactions is included!
+export { fetchTransactionCount, fetchSummary,fetchTransactions }

@@ -1,3 +1,4 @@
+import "dotenv/config" // Add this line to load environment variables
 import pool from "./db.js"
 import parseXMLFile from "./parse-xml.js"
 import path from "path"
