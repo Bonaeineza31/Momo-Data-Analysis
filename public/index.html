@@ -8,19 +8,6 @@
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-  <!-- Loading Screen
-  <div id="loading-screen" class="loading-screen">
-    <div class="loading-content">
-      <div class="loading-icon">
-        <i class="fas fa-mobile-alt"></i>
-      </div>
-      <h2>Loading MoMo Analytics...</h2>
-      <div class="loading-bar">
-        <div class="loading-progress"></div>
-      </div>
-    </div>
-  </div> -->
-
   <div class="dashboard-container">
     <!-- Header Section -->
     <header class="header">
@@ -31,7 +18,7 @@
       <div class="header-stats">
         <div class="quick-stat">
           <i class="fas fa-clock"></i>
-          <span>Last Updated: <span id="last-updated">--</span></span>
+          <span>Last Updated: <span id="last-updated">Today at 12:14 PM</span></span>
         </div>
         <div class="quick-stat">
           <i class="fas fa-database"></i>
@@ -39,20 +26,6 @@
         </div>
       </div>
     </header>
-
-    <!-- Welcome Section (shown on first visit) -->
-    <section id="welcome-section" class="welcome-section">
-      <div class="welcome-icon">
-        <i class="fas fa-hand-wave"></i>
-      </div>
-      <h2 class="welcome-title">Welcome to Your MoMo Analytics</h2>
-      <p class="welcome-subtitle">
-        Get comprehensive insights into your mobile money transactions. Track payments, transfers, deposits, and more with powerful visualizations and detailed analytics.
-      </p>
-      <button id="get-started-btn" class="get-started-btn">
-        <i class="fas fa-rocket"></i> Get Started
-      </button>
-    </section>
 
     <!-- Stats Overview -->
     <section class="stats-overview">
@@ -62,12 +35,8 @@
             <i class="fas fa-exchange-alt"></i>
           </div>
           <div class="stat-content">
-            <div class="stat-value" id="total-transactions">0</div>
+            <div class="stat-value" id="total-transactions"><span>0</span></div>
             <div class="stat-label">Total Transactions</div>
-            <div class="stat-change">
-              <i class="fas fa-arrow-up"></i>
-              <span>+0% from last month</span>
-            </div>
           </div>
         </div>
 
@@ -76,12 +45,8 @@
             <i class="fas fa-coins"></i>
           </div>
           <div class="stat-content">
-            <div class="stat-value" id="total-amount">0 RWF</div>
+            <div class="stat-value" id="total-amount"><span>0</span> RWF</div>
             <div class="stat-label">Total Money Moved</div>
-            <div class="stat-change">
-              <i class="fas fa-arrow-up"></i>
-              <span>+0% from last month</span>
-            </div>
           </div>
         </div>
 
@@ -90,12 +55,8 @@
             <i class="fas fa-arrow-down"></i>
           </div>
           <div class="stat-content">
-            <div class="stat-value" id="total-incoming">0 RWF</div>
+            <div class="stat-value" id="total-incoming"><span>0</span> RWF</div>
             <div class="stat-label">Money Received</div>
-            <div class="stat-change positive">
-              <i class="fas fa-arrow-up"></i>
-              <span>+0% from last month</span>
-            </div>
           </div>
         </div>
 
@@ -104,37 +65,10 @@
             <i class="fas fa-arrow-up"></i>
           </div>
           <div class="stat-content">
-            <div class="stat-value" id="total-outgoing">0 RWF</div>
+            <div class="stat-value" id="total-outgoing"><span>0</span> RWF</div>
             <div class="stat-label">Money Sent</div>
-            <div class="stat-change">
-              <i class="fas fa-arrow-up"></i>
-              <span>+0% from last month</span>
-            </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- Quick Actions -->
-    <section class="quick-actions">
-      <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
-      <div class="actions-grid">
-        <button class="action-btn" id="refresh-data">
-          <i class="fas fa-sync-alt"></i>
-          <span>Refresh Data</span>
-        </button>
-        <button class="action-btn" id="export-data">
-          <i class="fas fa-download"></i>
-          <span>Export Report</span>
-        </button>
-        <button class="action-btn" id="filter-today">
-          <i class="fas fa-calendar-day"></i>
-          <span>Today's Transactions</span>
-        </button>
-        <button class="action-btn" id="view-insights">
-          <i class="fas fa-lightbulb"></i>
-          <span>AI Insights</span>
-        </button>
       </div>
     </section>
 
@@ -229,9 +163,6 @@
             <option value="amount">Sort by Amount</option>
             <option value="type">Sort by Type</option>
           </select>
-          <button id="toggle-view" class="view-toggle">
-            <i class="fas fa-th-list"></i> List View
-          </button>
         </div>
       </div>
       
@@ -256,39 +187,12 @@
         </button>
       </div>
     </section>
-
-    <!-- Insights Panel -->
-    <section class="insights-section" id="insights-section" style="display: none;">
-      <div class="insights-header">
-        <h3><i class="fas fa-brain"></i> Smart Insights</h3>
-        <button id="close-insights" class="close-btn">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="insights-content">
-        <div class="insight-card">
-          <div class="insight-icon">
-            <i class="fas fa-trending-up"></i>
-          </div>
-          <div class="insight-text">
-            <h4>Spending Pattern</h4>
-            <p>Your spending has increased by 12% this month compared to last month.</p>
-          </div>
-        </div>
-        <!-- More insights will be added dynamically -->
-      </div>
-    </section>
   </div>
 
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-content">
-      <p>&copy; 2025 MoMo Analytics Dashboard. Built with ❤️ for better financial insights.</p>
-      <div class="footer-links">
-        <a href="#privacy">Privacy Policy</a>
-        <a href="#terms">Terms of Service</a>
-        <a href="#support">Support</a>
-      </div>
+      <p>&copy; 2025 MoMo Analytics Dashboard. Built for better financial insights.</p>
     </div>
   </footer>
 
