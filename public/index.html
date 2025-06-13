@@ -3,58 +3,297 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MoMo Data Dashboard</title>
-  <link rel="stylesheet" href="index.css"/>
+  <title>MoMo Analytics Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
-  <header>
-    <h1>MoMo Data Dashboard</h1>
-  </header>
+  <!-- Loading Screen
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-content">
+      <div class="loading-icon">
+        <i class="fas fa-mobile-alt"></i>
+      </div>
+      <h2>Loading MoMo Analytics...</h2>
+      <div class="loading-bar">
+        <div class="loading-progress"></div>
+      </div>
+    </div>
+  </div> -->
 
-  <main>
-    <!-- Summary Cards -->
-    <section id="summary-cards">
-      <div class="card" id="total-transactions">📊 Total Transactions: 0</div>
-      <div class="card" id="total-amount">💰 Total Money Moved: 0 RWF</div>
-      <div class="card" id="total-incoming">⬇️ Incoming: 0 RWF</div>
-      <div class="card" id="total-outgoing">⬆️ Outgoing: 0 RWF</div>
+  <div class="dashboard-container">
+    <!-- Header Section -->
+    <header class="header">
+      <div class="header-content">
+        <h1><i class="fas fa-chart-line"></i> MoMo Analytics Dashboard</h1>
+        <p>Real-time insights into your mobile money transactions</p>
+      </div>
+      <div class="header-stats">
+        <div class="quick-stat">
+          <i class="fas fa-clock"></i>
+          <span>Last Updated: <span id="last-updated">--</span></span>
+        </div>
+        <div class="quick-stat">
+          <i class="fas fa-database"></i>
+          <span>Status: <span id="data-status" class="status-active">Active</span></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Welcome Section (shown on first visit) -->
+    <section id="welcome-section" class="welcome-section">
+      <div class="welcome-icon">
+        <i class="fas fa-hand-wave"></i>
+      </div>
+      <h2 class="welcome-title">Welcome to Your MoMo Analytics</h2>
+      <p class="welcome-subtitle">
+        Get comprehensive insights into your mobile money transactions. Track payments, transfers, deposits, and more with powerful visualizations and detailed analytics.
+      </p>
+      <button id="get-started-btn" class="get-started-btn">
+        <i class="fas fa-rocket"></i> Get Started
+      </button>
     </section>
 
-    <!-- Filter -->
-    <section id="search-filter">
-      <h2>Search & Filter</h2>
-      <input type="text" id="search-input" placeholder="Search in message body..." />
-      <select id="filter-type">
-        <option value="">All Types</option>
-        <option value="payment">Payments</option>
-        <option value="withdrawal">Withdrawals</option>
-        <option value="transfer">Transfers</option>
-        <option value="deposit">Deposits</option>
-        <option value="bundle">Bundles</option>
-      </select>
-      <button id="apply-filter">Apply Filter</button>
+    <!-- Stats Overview -->
+    <section class="stats-overview">
+      <div class="stats-grid">
+        <div class="stat-card total">
+          <div class="stat-icon">
+            <i class="fas fa-exchange-alt"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="total-transactions">0</div>
+            <div class="stat-label">Total Transactions</div>
+            <div class="stat-change">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0% from last month</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card money">
+          <div class="stat-icon">
+            <i class="fas fa-coins"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="total-amount">0 RWF</div>
+            <div class="stat-label">Total Money Moved</div>
+            <div class="stat-change">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0% from last month</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card incoming">
+          <div class="stat-icon">
+            <i class="fas fa-arrow-down"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="total-incoming">0 RWF</div>
+            <div class="stat-label">Money Received</div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0% from last month</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card outgoing">
+          <div class="stat-icon">
+            <i class="fas fa-arrow-up"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="total-outgoing">0 RWF</div>
+            <div class="stat-label">Money Sent</div>
+            <div class="stat-change">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0% from last month</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Charts -->
-    <section id="visualizations">
-      <h2>Visualizations</h2>
-      <canvas id="transaction-volume-chart"></canvas>
-      <canvas id="monthly-summary-chart"></canvas>
-      <canvas id="payment-distribution-chart"></canvas>
+    <!-- Quick Actions -->
+    <section class="quick-actions">
+      <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+      <div class="actions-grid">
+        <button class="action-btn" id="refresh-data">
+          <i class="fas fa-sync-alt"></i>
+          <span>Refresh Data</span>
+        </button>
+        <button class="action-btn" id="export-data">
+          <i class="fas fa-download"></i>
+          <span>Export Report</span>
+        </button>
+        <button class="action-btn" id="filter-today">
+          <i class="fas fa-calendar-day"></i>
+          <span>Today's Transactions</span>
+        </button>
+        <button class="action-btn" id="view-insights">
+          <i class="fas fa-lightbulb"></i>
+          <span>AI Insights</span>
+        </button>
+      </div>
     </section>
 
-    <!-- Raw Data -->
-    <section id="details-view">
-      <h2>Transaction Details</h2>
-      <div id="transaction-details"></div>
-    </section>
-  </main>
+    <!-- Search and Filter Section -->
+    <section class="controls-section">
+      <div class="controls-header">
+        <h3 class="controls-title">
+          <i class="fas fa-search"></i> Search & Filter
+        </h3>
+        <div class="controls-actions">
+          <button id="clear-filters" class="clear-btn">
+            <i class="fas fa-times"></i> Clear All
+          </button>
+        </div>
+      </div>
+      
+      <div class="controls-grid">
+        <div class="search-group">
+          <i class="fas fa-search search-icon"></i>
+          <input 
+            type="text" 
+            id="search-input" 
+            class="search-input" 
+            placeholder="Search transactions, amounts, or descriptions..."
+          />
+        </div>
+        
+        <select id="filter-type" class="filter-select">
+          <option value="">All Transaction Types</option>
+          <option value="incoming">💰 Incoming Money</option>
+          <option value="payment">💳 Payments</option>
+          <option value="transfer">📱 Transfers</option>
+          <option value="withdrawal">🏧 Withdrawals</option>
+          <option value="deposit">🏦 Bank Deposits</option>
+          <option value="airtime">📞 Airtime</option>
+          <option value="bundle">🌐 Data Bundles</option>
+          <option value="bill">⚡ Bill Payments</option>
+        </select>
+        
+        <button id="apply-filter" class="filter-button">
+          <i class="fas fa-filter"></i> Apply Filter
+        </button>
+      </div>
 
-  <footer>
-    <p>&copy; 2025 MoMo Insights</p>
+      <div class="active-filters" id="active-filters" style="display: none;">
+        <span class="filters-label">Active Filters:</span>
+        <div class="filter-tags" id="filter-tags"></div>
+      </div>
+    </section>
+
+    <!-- Charts Section -->
+    <section class="charts-section">
+      <div class="charts-header">
+        <h3><i class="fas fa-chart-pie"></i> Analytics Overview</h3>
+        <div class="chart-controls">
+          <select id="chart-period" class="chart-select">
+            <option value="all">All Time</option>
+            <option value="month">This Month</option>
+            <option value="week">This Week</option>
+            <option value="today">Today</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="charts-grid">
+        <div class="chart-container">
+          <h4 class="chart-title">Transaction Volume by Type</h4>
+          <canvas id="transaction-volume-chart"></canvas>
+        </div>
+        
+        <div class="chart-container">
+          <h4 class="chart-title">Monthly Transaction Trends</h4>
+          <canvas id="monthly-summary-chart"></canvas>
+        </div>
+        
+        <div class="chart-container">
+          <h4 class="chart-title">Transaction Distribution</h4>
+          <canvas id="payment-distribution-chart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Transaction Details -->
+    <section class="details-section">
+      <div class="details-header">
+        <h3 class="details-title">
+          <i class="fas fa-list-alt"></i> Recent Transactions
+        </h3>
+        <div class="details-controls">
+          <select id="sort-by" class="sort-select">
+            <option value="date">Sort by Date</option>
+            <option value="amount">Sort by Amount</option>
+            <option value="type">Sort by Type</option>
+          </select>
+          <button id="toggle-view" class="view-toggle">
+            <i class="fas fa-th-list"></i> List View
+          </button>
+        </div>
+      </div>
+      
+      <div class="transactions-summary">
+        <div class="summary-item">
+          <span class="summary-label">Showing:</span>
+          <span id="showing-count" class="summary-value">0 transactions</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Total Value:</span>
+          <span id="showing-total" class="summary-value">0 RWF</span>
+        </div>
+      </div>
+      
+      <div id="transaction-details" class="transaction-list">
+        <!-- Transactions will be populated here -->
+      </div>
+      
+      <div class="load-more-container">
+        <button id="load-more" class="load-more-btn" style="display: none;">
+          <i class="fas fa-chevron-down"></i> Load More Transactions
+        </button>
+      </div>
+    </section>
+
+    <!-- Insights Panel -->
+    <section class="insights-section" id="insights-section" style="display: none;">
+      <div class="insights-header">
+        <h3><i class="fas fa-brain"></i> Smart Insights</h3>
+        <button id="close-insights" class="close-btn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="insights-content">
+        <div class="insight-card">
+          <div class="insight-icon">
+            <i class="fas fa-trending-up"></i>
+          </div>
+          <div class="insight-text">
+            <h4>Spending Pattern</h4>
+            <p>Your spending has increased by 12% this month compared to last month.</p>
+          </div>
+        </div>
+        <!-- More insights will be added dynamically -->
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 MoMo Analytics Dashboard. Built with ❤️ for better financial insights.</p>
+      <div class="footer-links">
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+        <a href="#support">Support</a>
+      </div>
+    </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   <script src="chart.js"></script>
   <script src="index.js"></script>
 </body>
