@@ -527,3 +527,137 @@ body {
     grid-template-columns: 1fr;
   }
 }
+.transaction-limit-wrapper {
+  margin: 15px 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.showing-transactions {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.transaction-limit-input {
+  width: 60px;
+  padding: 4px 8px;
+  margin: 0 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.limit-button {
+  background: none;
+  border: none;
+  color: #004990;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 0;
+  font-size: 14px;
+}
+
+.limit-button:hover {
+  text-decoration: underline;
+}
+
+/* Update chart colors to use only MTN colors */
+.chart-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 15px;
+}
+
+/* Transaction item styling */
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+}
+
+.transaction-item:hover {
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.transaction-left {
+  display: flex;
+  align-items: center;
+}
+
+.transaction-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  color: #004990;
+}
+
+/* Use only MTN colors for transaction icons */
+.transaction-icon.incoming,
+.transaction-icon.deposit {
+  background-color: #ffcc00;
+  color: #004990;
+}
+
+.transaction-icon.outgoing,
+.transaction-icon.payment,
+.transaction-icon.transfer,
+.transaction-icon.withdrawal,
+.transaction-icon.airtime,
+.transaction-icon.bundle,
+.transaction-icon.bill {
+  background-color: #004990;
+  color: #ffcc00;
+}
+
+.transaction-info {
+  flex: 1;
+}
+
+.transaction-title {
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+
+.transaction-details {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.transaction-date {
+  font-size: 12px;
+  color: #999;
+}
+
+.transaction-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.transaction-amount {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.transaction-amount.incoming {
+  color: #004990;
+}
+
+.transaction-amount.outgoing {
+  color: #ffcc00;
+}

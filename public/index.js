@@ -7,9 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('last-updated').textContent = new Date().toLocaleString();
 });
 
-// Global variable to store all transactions
-let allTransactions = [];
-
 // Function to set up event listeners
 function setupEventListeners() {
   // Apply filter button
@@ -46,21 +43,14 @@ function setupEventListeners() {
     loadMoreBtn.addEventListener('click', loadMoreTransactions);
   }
   
-  // Fetch all transactions for filtering
-  fetchAllTransactions();
-}
-
-// Function to fetch all transactions
-async function fetchAllTransactions() {
-  try {
-    const response = await fetch('/api/transactions');
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    allTransactions = await response.json();
-    console.log('All transactions loaded for filtering:', allTransactions.length);
-  } catch (error) {
-    console.error('Error fetching all transactions:', error);
+  // Transaction limit input - allow Enter key to apply
+  const limitInput = document.getElementById('transaction-limit');
+  if (limitInput) {
+    limitInput.addEventListener('keyup', function(event) {
+      if (event.key === 'Enter') {
+        document.getElementById('apply-limit').click();
+      }
+    });
   }
 }
 
@@ -115,8 +105,8 @@ function applyFilters() {
   });
   
   // Filter transactions from our global allTransactions array
-  if (allTransactions.length > 0) {
-    const filteredTransactions = allTransactions.filter(tx => {
+  if (window.allTransactions && window.allTransactions.length > 0) {
+    const filteredTransactions = window.allTransactions.filter(tx => {
       const typeMatch = !filterType || tx.type === filterType;
       const textMatch = !searchText || 
                         (tx.body && tx.body.toLowerCase().includes(searchText));
@@ -143,8 +133,8 @@ function updateTransactionDisplay(transactions) {
   document.getElementById('showing-count').textContent = `${transactions.length} transactions`;
   document.getElementById('showing-total').textContent = `${total.toLocaleString()} RWF`;
   
-  // Display only the first 10 transactions
-  const displayTransactions = transactions.slice(0, 10);
+  // Display only the first 20 transactions for performance
+  const displayTransactions = transactions.slice(0, 20);
   
   // Display transactions
   displayTransactions.forEach(tx => {
@@ -182,12 +172,19 @@ function updateTransactionDisplay(transactions) {
       </div>
     `;
     
+    // Add click event to show full SMS content
+    item.addEventListener('click', () => {
+      alert(`Full SMS Content:\n\n${tx.body}`);
+    });
+    
     container.appendChild(item);
   });
   
   // Show load more button if there are more transactions
-  if (transactions.length > 10) {
+  if (transactions.length > 20) {
     document.getElementById('load-more').style.display = 'inline-flex';
+    // Store current filtered transactions for load more functionality
+    window.currentFilteredTransactions = transactions;
   } else {
     document.getElementById('load-more').style.display = 'none';
   }
@@ -200,8 +197,8 @@ function clearFilters() {
   document.getElementById('active-filters').style.display = 'none';
   
   // Reset transaction display with all transactions
-  if (allTransactions.length > 0) {
-    updateTransactionDisplay(allTransactions);
+  if (window.allTransactions && window.allTransactions.length > 0) {
+    updateTransactionDisplay(window.allTransactions);
   } else {
     console.warn('No transactions available to display');
   }
@@ -211,43 +208,77 @@ function clearFilters() {
 function updateChartPeriod(period) {
   console.log(`Updating charts for period: ${period}`);
   
-  if (allTransactions.length === 0) {
+  if (!window.allTransactions || window.allTransactions.length === 0) {
     console.warn('No transactions available for filtering by period');
     return;
   }
   
   const today = new Date();
   let filteredTransactions = [];
+  let periodName = '';
   
   switch(period) {
     case 'today':
-      filteredTransactions = allTransactions.filter(tx => {
+      filteredTransactions = window.allTransactions.filter(tx => {
         const txDate = new Date(tx.date);
         return txDate.toDateString() === today.toDateString();
       });
+      periodName = 'Today';
       break;
     case 'week':
       const oneWeekAgo = new Date(today);
       oneWeekAgo.setDate(today.getDate() - 7);
-      filteredTransactions = allTransactions.filter(tx => {
+      filteredTransactions = window.allTransactions.filter(tx => {
         const txDate = new Date(tx.date);
         return txDate >= oneWeekAgo;
       });
+      periodName = 'This Week';
       break;
     case 'month':
       const oneMonthAgo = new Date(today);
       oneMonthAgo.setMonth(today.getMonth() - 1);
-      filteredTransactions = allTransactions.filter(tx => {
+      filteredTransactions = window.allTransactions.filter(tx => {
         const txDate = new Date(tx.date);
         return txDate >= oneMonthAgo;
       });
+      periodName = 'This Month';
       break;
     default:
-      filteredTransactions = allTransactions;
+      filteredTransactions = window.allTransactions;
+      periodName = 'All Time';
   }
+  
+  // Show active filters section
+  const activeFiltersSection = document.getElementById('active-filters');
+  activeFiltersSection.style.display = 'block';
+  
+  // Add period filter tag
+  const filterTags = document.getElementById('filter-tags');
+  filterTags.innerHTML = '';
+  
+  const periodTag = document.createElement('div');
+  periodTag.className = 'filter-tag';
+  periodTag.innerHTML = `
+    Period: ${periodName} 
+    <span class="remove-tag" data-filter="period">×</span>
+  `;
+  filterTags.appendChild(periodTag);
+  
+  // Add event listener to remove period tag
+  periodTag.querySelector('.remove-tag').addEventListener('click', function() {
+    document.getElementById('chart-period').value = 'all';
+    document.getElementById('active-filters').style.display = 'none';
+    updateChartPeriod('all');
+  });
   
   // Process the filtered data and update charts
   processChartData(filteredTransactions);
+  
+  // Update transaction display
+  updateTransactionDisplay(filteredTransactions);
+  
+  // Update the range display in the header
+  document.getElementById('range-display').textContent = `${periodName} (${filteredTransactions.length} transactions)`;
 }
 
 // Function to process chart data
@@ -263,10 +294,11 @@ function processChartData(transactions) {
     types[tx.type] = (types[tx.type] || 0) + 1;
     
     // Calculate monthly totals
-    const month = new Date(tx.date).toLocaleString('default', { month: 'short', year: 'numeric' });
+    const date = new Date(tx.date);
+    const month = date.toLocaleString('default', { month: 'short', year: 'numeric' });
     monthlyTotals[month] = (monthlyTotals[month] || 0) + tx.amount;
     
-    // Calculate total amounts
+    // Calculate total amounts for displayed transactions
     total += tx.amount;
     if (['deposit', 'incoming'].includes(tx.type)) {
       incoming += tx.amount;
@@ -274,12 +306,6 @@ function processChartData(transactions) {
       outgoing += tx.amount;
     }
   });
-
-  // Update summary cards
-  document.querySelector('#total-transactions span').textContent = transactions.length;
-  document.querySelector('#total-amount span').textContent = total.toLocaleString();
-  document.querySelector('#total-incoming span').textContent = incoming.toLocaleString();
-  document.querySelector('#total-outgoing span').textContent = outgoing.toLocaleString();
 
   // Update transaction list summary
   document.getElementById('showing-count').textContent = `${transactions.length} transactions`;
@@ -291,21 +317,28 @@ function processChartData(transactions) {
 
 // Function to update charts
 function updateCharts(types, monthlyTotals) {
+  // Sort months chronologically
+  const sortedMonths = Object.keys(monthlyTotals).sort((a, b) => {
+    const dateA = new Date(a);
+    const dateB = new Date(b);
+    return dateA - dateB;
+  });
+
   // Get chart instances
-  const charts = Chart.getChart('transaction-volume-chart');
+  const barChart = Chart.getChart('transaction-volume-chart');
   const lineChart = Chart.getChart('monthly-summary-chart');
   const pieChart = Chart.getChart('payment-distribution-chart');
   
   // If charts exist, update them
-  if (charts) {
-    charts.data.labels = Object.keys(types);
-    charts.data.datasets[0].data = Object.values(types);
-    charts.update();
+  if (barChart) {
+    barChart.data.labels = Object.keys(types);
+    barChart.data.datasets[0].data = Object.values(types);
+    barChart.update();
   }
   
   if (lineChart) {
-    lineChart.data.labels = Object.keys(monthlyTotals);
-    lineChart.data.datasets[0].data = Object.values(monthlyTotals);
+    lineChart.data.labels = sortedMonths;
+    lineChart.data.datasets[0].data = sortedMonths.map(month => monthlyTotals[month]);
     lineChart.update();
   }
   
@@ -320,15 +353,17 @@ function updateCharts(types, monthlyTotals) {
 function sortTransactions(sortBy) {
   console.log(`Sorting transactions by: ${sortBy}`);
   
-  if (allTransactions.length === 0) {
+  // Get currently filtered transactions or all transactions
+  let transactions = window.currentFilteredTransactions || window.allTransactions;
+  
+  if (!transactions || transactions.length === 0) {
     console.warn('No transactions available for sorting');
     return;
   }
   
-  // Get currently displayed transactions
-  const displayedTransactions = [...allTransactions];
+  transactions = [...transactions]; // Create a copy to avoid modifying the original
   
-  displayedTransactions.sort((a, b) => {
+  transactions.sort((a, b) => {
     if (sortBy === 'date') {
       return new Date(b.date) - new Date(a.date); // Most recent first
     } else if (sortBy === 'amount') {
@@ -340,7 +375,7 @@ function sortTransactions(sortBy) {
   });
   
   // Update the display with sorted transactions
-  updateTransactionDisplay(displayedTransactions);
+  updateTransactionDisplay(transactions);
 }
 
 // Function to load more transactions
@@ -349,23 +384,15 @@ function loadMoreTransactions() {
   const currentCount = container.querySelectorAll('.transaction-item').length;
   
   // Get currently filtered transactions or all transactions
-  const activeFilters = document.getElementById('active-filters').style.display !== 'none';
-  let transactions = allTransactions;
+  const transactions = window.currentFilteredTransactions || window.allTransactions;
   
-  if (activeFilters) {
-    const filterType = document.getElementById('filter-type').value;
-    const searchText = document.getElementById('search-input').value.toLowerCase();
-    
-    transactions = allTransactions.filter(tx => {
-      const typeMatch = !filterType || tx.type === filterType;
-      const textMatch = !searchText || 
-                      (tx.body && tx.body.toLowerCase().includes(searchText));
-      return typeMatch && textMatch;
-    });
+  if (!transactions || transactions.length === 0) {
+    console.warn('No transactions available for loading more');
+    return;
   }
   
   // Get next batch of transactions
-  const nextBatch = transactions.slice(currentCount, currentCount + 10);
+  const nextBatch = transactions.slice(currentCount, currentCount + 20);
   
   if (nextBatch.length === 0) {
     document.getElementById('load-more').style.display = 'none';
@@ -408,6 +435,11 @@ function loadMoreTransactions() {
       </div>
     `;
     
+    // Add click event to show full SMS content
+    item.addEventListener('click', () => {
+      alert(`Full SMS Content:\n\n${tx.body}`);
+    });
+    
     container.appendChild(item);
   });
   
@@ -417,7 +449,7 @@ function loadMoreTransactions() {
   }
 }
 
-// Helper function to extract description from SMS body
+// Helper functions from chart.js
 function extractDescription(body) {
   if (!body) return null;
   
@@ -443,7 +475,6 @@ function extractDescription(body) {
   return null;
 }
 
-// Helper function to get transaction icon
 function getTransactionIcon(type) {
   const icons = {
     'incoming': 'fas fa-arrow-down',
@@ -461,7 +492,6 @@ function getTransactionIcon(type) {
   return icons[type] || 'fas fa-circle';
 }
 
-// Helper function to get transaction title
 function getTransactionTitle(type) {
   const titles = {
     'incoming': 'Money Received',

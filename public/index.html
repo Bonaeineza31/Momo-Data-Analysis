@@ -166,11 +166,26 @@
         </div>
       </div>
       
-      <div class="transactions-summary">
-        <div class="summary-item">
-          <span class="summary-label">Showing:</span>
-          <span id="showing-count" class="summary-value">0 transactions</span>
+      <!-- Transaction Limit Control - Moved here as requested -->
+      <div class="transaction-limit-wrapper">
+        <div class="showing-transactions">
+          Showing: 
+          <input 
+            type="number" 
+            id="transaction-limit" 
+            class="transaction-limit-input" 
+            min="10" 
+            max="10000" 
+            step="10" 
+            value="50"
+          />
+          <button id="apply-limit" class="limit-button">
+            transactions
+          </button>
         </div>
+      </div>
+      
+      <div class="transactions-summary">
         <div class="summary-item">
           <span class="summary-label">Total Value:</span>
           <span id="showing-total" class="summary-value">0 RWF</span>
