@@ -1,7 +1,5 @@
-// backend/db.js
-const { Pool } = require('pg');
-require('dotenv').config();
+import { Pool } from "pg"
 
-const pool = new Pool();
+const pool = new Pool()
 
-module.exports = pool;
+export default pool 

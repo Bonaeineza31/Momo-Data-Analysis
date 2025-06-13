@@ -1,25 +1,31 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const transactionRoutes = require('./routes/transactionRoutes'); // Import your new routes
+import "dotenv/config" // Modern way to load dotenv
+import express from "express"
+import cors from "cors"
+import path from "path"
+import { fileURLToPath } from "url" // For __dirname equivalent
+import transactionRoutes from "./routes/transactions.js" // Note the .js extension
 
-const app = express();
-app.use(cors());
-app.use(express.json());
+// __dirname equivalent for ES Modules
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+const app = express()
+app.use(cors())
+app.use(express.json())
 
 // Serve frontend static files
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, "../public")))
 
 // Use your transaction routes
-app.use('/api', transactionRoutes); // All transaction-related routes will start with /api
+app.use("/api", transactionRoutes)
 
 // Fallback to index.html for unknown frontend routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
-});
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/index.html"))
+})
 
 // Start server
-const PORT = 3000;
+const PORT = 3000
 app.listen(PORT, () => {
-  console.log(` Server running at http://localhost:${PORT}`);
-});
+  console.log(` Server running at http://localhost:${PORT}`)
+})
