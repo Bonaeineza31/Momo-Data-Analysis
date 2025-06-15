@@ -1,4 +1,4 @@
-import "dotenv/config"; // Add this line to load environment variables
+import "dotenv/config";
 import pool from "./db.js";
 import parseXMLFile from "./parse-xml.js";
 import path from "path";
@@ -8,7 +8,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function insertData() {
-  const messages = await parseXMLFile(path.join(__dirname, "data/modified-sms.xml"));
+  const filePath = path.join(__dirname, "data", "modified-sms.xml");
+  const messages = await parseXMLFile(filePath);
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS transactions (
@@ -35,5 +36,4 @@ async function insertData() {
   console.log("✅ Data inserted without duplication!");
 }
 
-// ⬅️ Export it so it can be used from server.js
 export default insertData;

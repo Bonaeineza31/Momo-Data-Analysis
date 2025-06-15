@@ -22,13 +22,14 @@ app.use("/api", transactionRoutes);
 // ✅ Temporary route to trigger data insert
 app.get("/insert-data", async (req, res) => {
   try {
-    await insertData(); // insert data from XML
-    res.send(" Data inserted into PostgreSQL successfully.");
+    await insertData();
+    res.send("✅ Data inserted into PostgreSQL successfully.");
   } catch (err) {
-    console.error("Insert error:", err);
-    res.status(500).send(" Failed to insert data.");
+    console.error("Insert error:", err); // already exists
+    res.status(500).send(`❌ Failed to insert data: ${err.message}`);
   }
 });
+
 
 // Fallback to index.html for unknown frontend routes
 app.get("*", (req, res) => {
