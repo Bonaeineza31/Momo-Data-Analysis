@@ -1,5 +1,12 @@
 import { Pool } from "pg"
+import dotenv from "dotenv"
 
-const pool = new Pool()
+dotenv.config()
 
-export default pool 
+const pool = new Pool({
+  ssl: {
+    rejectUnauthorized: false, // Required by Render
+  },
+})
+
+export default pool
