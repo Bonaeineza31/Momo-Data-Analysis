@@ -5,7 +5,8 @@ import path from "path";
 import { fileURLToPath } from "url"; // For __dirname equivalent
 import transactionRoutes from "./routes/transactions.js";
 import insertData from "./data.js"; // ⬅️ Import the function
-
+import authRoutes from "./routes/authroutes.js" // New: Import auth routes
+import authMiddleware from "./middlewares/authmidlleware.js" // New: Import auth middleware
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -18,6 +19,11 @@ app.use(express.static(path.join(__dirname, "../public")));
 
 // Use your transaction routes
 app.use("/api", transactionRoutes);
+app.use("/api/auth", authRoutes)
+
+// New: Apply authentication middleware to transaction routes
+// All routes under /api/transactions will now require a valid token
+app.use("/api", authMiddleware) // Apply to all /api routes after auth
 
 // ✅ Temporary route to trigger data insert
 app.get("/insert-data", async (req, res) => {

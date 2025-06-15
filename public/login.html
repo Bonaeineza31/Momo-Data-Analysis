@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoMo Dashboard - Login / Register</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="login.css"> <!-- Link to the new CSS file -->
+</head>
+<body>
+    <div class="auth-container">
+        <h1><i class="fas fa-mobile-alt"></i> MoMo Dashboard</h1>
+        <div id="message" class="message"></div>
+
+        <!-- Login Form -->
+        <form id="login-form" class="active">
+            <div class="form-group">
+                <label for="login-phone">Phone Number</label>
+                <input type="text" id="login-phone" placeholder="e.g., 250788123456" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="auth-button">Login</button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="register-form">
+            <div class="form-group">
+                <label for="register-phone">Phone Number</label>
+                <input type="text" id="register-phone" placeholder="e.g., 250788123456" required>
+            </div>
+            <div class="form-group">
+                <label for="register-password">Password</label>
+                <input type="password" id="register-password" placeholder="Create a password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" placeholder="Confirm your password" required>
+            </div>
+            <button type="submit" class="auth-button">Register</button>
+        </form>
+
+        <div class="toggle-link">
+            <span id="toggle-text">Don't have an account?</span>
+            <a href="#" id="toggle-auth-mode">Register here</a>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
