@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="dashboard-container">
-    <!-- Header Section -->
+    <!-- Header -->
     <header class="header">
       <div class="header-content">
         <h1><i class="fas fa-chart-line"></i> MoMo Analytics Dashboard</h1>
@@ -31,187 +31,117 @@
     <section class="stats-overview">
       <div class="stats-grid">
         <div class="stat-card total">
-          <div class="stat-icon">
-            <i class="fas fa-exchange-alt"></i>
-          </div>
+          <div class="stat-icon"><i class="fas fa-exchange-alt"></i></div>
           <div class="stat-content">
-            <div class="stat-value" id="total-transactions"><span>0</span></div>
+            <div class="stat-value" id="total-transactions">0</div>
             <div class="stat-label">Total Transactions</div>
           </div>
         </div>
-
         <div class="stat-card money">
-          <div class="stat-icon">
-            <i class="fas fa-coins"></i>
-          </div>
+          <div class="stat-icon"><i class="fas fa-coins"></i></div>
           <div class="stat-content">
-            <div class="stat-value" id="total-amount"><span>0</span> RWF</div>
+            <div class="stat-value" id="total-amount">0 RWF</div>
             <div class="stat-label">Total Money Moved</div>
           </div>
         </div>
-
         <div class="stat-card incoming">
-          <div class="stat-icon">
-            <i class="fas fa-arrow-down"></i>
-          </div>
+          <div class="stat-icon"><i class="fas fa-arrow-down"></i></div>
           <div class="stat-content">
-            <div class="stat-value" id="total-incoming"><span>0</span> RWF</div>
+            <div class="stat-value" id="total-incoming">0 RWF</div>
             <div class="stat-label">Money Received</div>
           </div>
         </div>
-
         <div class="stat-card outgoing">
-          <div class="stat-icon">
-            <i class="fas fa-arrow-up"></i>
-          </div>
+          <div class="stat-icon"><i class="fas fa-arrow-up"></i></div>
           <div class="stat-content">
-            <div class="stat-value" id="total-outgoing"><span>0</span> RWF</div>
+            <div class="stat-value" id="total-outgoing">0 RWF</div>
             <div class="stat-label">Money Sent</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Search and Filter Section -->
+    <!-- Search and Filter -->
     <section class="controls-section">
       <div class="controls-header">
-        <h3 class="controls-title">
-          <i class="fas fa-search"></i> Search & Filter
-        </h3>
-        <div class="controls-actions">
-          <button id="clear-filters" class="clear-btn">
-            <i class="fas fa-times"></i> Clear All
-          </button>
-        </div>
+        <h3><i class="fas fa-search"></i> Search & Filter</h3>
+        <button id="clear-filters" class="clear-btn">
+          <i class="fas fa-times"></i> Clear
+        </button>
       </div>
       
       <div class="controls-grid">
         <div class="search-group">
           <i class="fas fa-search search-icon"></i>
-          <input 
-            type="text" 
-            id="search-input" 
-            class="search-input" 
-            placeholder="Search transactions, amounts, or descriptions..."
-          />
+          <input type="text" id="search-input" class="search-input" placeholder="Search transactions..."/>
         </div>
         
         <select id="filter-type" class="filter-select">
-          <option value="">All Transaction Types</option>
-          <option value="incoming">💰 Incoming Money</option>
-          <option value="payment">💳 Payments</option>
-          <option value="transfer">📱 Transfers</option>
-          <option value="withdrawal">🏧 Withdrawals</option>
-          <option value="deposit">🏦 Bank Deposits</option>
-          <option value="airtime">📞 Airtime</option>
-          <option value="bundle">🌐 Data Bundles</option>
-          <option value="bill">⚡ Bill Payments</option>
+          <option value="">All Types</option>
+          <option value="incoming"> Incoming</option>
+          <option value="payment">Payments</option>
+          <option value="transfer"> Transfers</option>
+          <option value="withdrawal"> Withdrawals</option>
+          <option value="airtime"> Airtime</option>
         </select>
         
         <button id="apply-filter" class="filter-button">
-          <i class="fas fa-filter"></i> Apply Filter
+          <i class="fas fa-filter"></i> Filter
         </button>
       </div>
-
-      <div class="active-filters" id="active-filters" style="display: none;">
-        <span class="filters-label">Active Filters:</span>
-        <div class="filter-tags" id="filter-tags"></div>
-      </div>
     </section>
 
-    <!-- Charts Section -->
+    <!-- Charts -->
     <section class="charts-section">
-      <div class="charts-header">
-        <h3><i class="fas fa-chart-pie"></i> Analytics Overview</h3>
-        <div class="chart-controls">
-          <select id="chart-period" class="chart-select">
-            <option value="all">All Time</option>
-            <option value="month">This Month</option>
-            <option value="week">This Week</option>
-            <option value="today">Today</option>
-          </select>
-        </div>
-      </div>
-      
-      <div class="charts-grid">
-        <div class="chart-container">
-          <h4 class="chart-title">Transaction Volume by Type</h4>
-          <canvas id="transaction-volume-chart"></canvas>
-        </div>
-        
-        <div class="chart-container">
-          <h4 class="chart-title">Monthly Transaction Trends</h4>
-          <canvas id="monthly-summary-chart"></canvas>
-        </div>
-        
-        <div class="chart-container">
-          <h4 class="chart-title">Transaction Distribution</h4>
-          <canvas id="payment-distribution-chart"></canvas>
-        </div>
-      </div>
-    </section>
+  <div class="charts-header">
+    <h3><i class="fas fa-chart-pie"></i> Analytics</h3>
+    <select id="chart-period" class="chart-select">
+      <option value="all">All Time</option>
+      <option value="month">This Month</option>
+      <option value="week">This Week</option>
+    </select>
+  </div>
+  
+  <div class="charts-grid">
+    <div class="chart-container">
+      <h4>Transaction Volume</h4>
+      <canvas id="volume-chart"></canvas>
+    </div>
+    <div class="chart-container">
+      <h4>Monthly Trends</h4>
+      <canvas id="trends-chart"></canvas>
+    </div>
+    <div class="chart-container">
+      <h4>Transaction Types</h4>
+      <canvas id="types-chart"></canvas>
+    </div>
+  </div>
+</section>
 
-    <!-- Transaction Details -->
+    <!-- Transaction List -->
     <section class="details-section">
       <div class="details-header">
-        <h3 class="details-title">
-          <i class="fas fa-list-alt"></i> Recent Transactions
-        </h3>
-        <div class="details-controls">
-          <select id="sort-by" class="sort-select">
-            <option value="date">Sort by Date</option>
-            <option value="amount">Sort by Amount</option>
-            <option value="type">Sort by Type</option>
-          </select>
-        </div>
+        <h3><i class="fas fa-list-alt"></i> Recent Transactions</h3>
+        <select id="sort-by" class="sort-select">
+          <option value="date">Sort by Date</option>
+          <option value="amount">Sort by Amount</option>
+        </select>
       </div>
       
-      <!-- Transaction Limit Control -->
-      <div class="transaction-limit-wrapper">
-        <div class="showing-transactions">
-          Showing: 
-          <input 
-            type="number" 
-            id="transaction-limit" 
-            class="transaction-limit-input" 
-            min="10" 
-            max="10000" 
-            step="10" 
-            value="50"
-          />
-          <button id="apply-limit" class="limit-button">
-            transactions
-          </button>
-        </div>
+      <div class="transaction-limit">
+        Show: 
+        <input type="number" id="limit-input" value="50" min="10" max="500" step="10"/>
+        <button id="apply-limit">transactions</button>
       </div>
       
-      <div class="transactions-summary">
-        <div class="summary-item">
-          <span class="summary-label">Total Value:</span>
-          <span id="showing-total" class="summary-value">0 RWF</span>
-        </div>
-      </div>
+      <div id="transaction-list" class="transaction-list"></div>
       
-      <div id="transaction-details" class="transaction-list">
-        <!-- Transactions will be populated here -->
-      </div>
-      
-      <div class="load-more-container">
-        <button id="load-more" class="load-more-btn" style="display: none;">
-          <i class="fas fa-chevron-down"></i> Load More Transactions
-        </button>
-      </div>
+      <button id="load-more" class="load-more-btn" style="display: none;">
+        <i class="fas fa-chevron-down"></i> Load More
+      </button>
     </section>
   </div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-content">
-      <p>&copy; 2025 MoMo Analytics Dashboard. Built for better financial insights.</p>
-    </div>
-  </footer>
-
-  <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   <script src="chart.js"></script>
   <script src="index.js"></script>

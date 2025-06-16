@@ -6,7 +6,9 @@ This project is a full-stack web application that provides visual analytics for 
 
 https://youtu.be/RYxYdA_5Ngk
 
+## Deployed Version
 
+https://momo-data-analysis-ngho.onrender.com/
 
 ## Features
 
