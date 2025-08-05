@@ -116,7 +116,7 @@ node server.js
 
 Open Postman or your browser and visit:
 
-http://localhost:3000/api/transactions
+http://localhost:3000
 
 
 ### 1. Frontend Setup
